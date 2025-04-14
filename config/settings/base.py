@@ -136,7 +136,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = str(BASE_DIR / "static")
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -157,16 +157,33 @@ SPECTACULAR_SETTINGS = {
         "name": "MIT license",
         "url": "https://opensource.org/license/MIT",
     },
-    "COMPONENT_SPLIT_REQUEST": True,
-    "SCHEMA_PATH_PREFIX": "/api/v1",
-    "COMPONENT_SPLIT_REQUEST": True,
-    "COMPONENT_SPLIT_REQUEST": True,
-    "COMPONENT_SPLIT_REQUEST": True,
-    "COMPONENT_SPLIT_REQUEST": True,
-    "COMPONENT_SPLIT_REQUEST": True,
-    "COMPONENT_SPLIT_REQUEST": True,
-    "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "SCHEMA_PATH_PREFIX": "/api/v1",
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
+    # "COMPONENT_SPLIT_REQUEST": True,
 }
+
+if USE_TZ:
+    CELERY_TIMEZONE = TIME_ZONE
+
+CELERY_BROKER_URL = getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = getenv("CELERY_RESULT_BACKEND")
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_RESULT_BACKEND_MAX_RETRIES = 10
+CELERY_TASK_SEND_SENT_EVENT = True
+CELERY_RESULT_EXTENDED = True
+CELERY_RESULT_BACKEND_ALWAYS_RETRY = True
+CELERY_TASK_TIME_LIMIT = 5 * 60
+CELERY_TASK_SOFT_TIME_LIMIT = 60
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_WORKER_SEND_TASK_EVENTS = True
 
 LOGGING_CONFIG = None
 
